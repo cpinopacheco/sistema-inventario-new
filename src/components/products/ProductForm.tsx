@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { FaPlus, FaSave, FaTimes } from "react-icons/fa"
-import { type Product, useProducts } from "../../context/ProductContext"
-import { Tooltip } from "../ui/Tooltip"
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { FaPlus, FaSave, FaTimes } from "react-icons/fa";
+import { type Product, useProducts } from "../../context/ProductContext";
+import { Tooltip } from "../ui/Tooltip";
 
 interface ProductFormProps {
-  product?: Product
-  onClose: () => void
-  isVisible: boolean
+  product?: Product;
+  onClose: () => void;
+  isVisible: boolean;
 }
 
 const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
-  const { addProduct, updateProduct, categories } = useProducts()
+  const { addProduct, updateProduct, categories } = useProducts();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -25,14 +25,14 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
     location: "",
     price: 0,
     image: "",
-  })
+  });
   const [errors, setErrors] = useState({
     name: "",
     category: "",
     stock: "",
     minStock: "",
     price: "",
-  })
+  });
 
   useEffect(() => {
     if (product) {
@@ -45,89 +45,96 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
         location: product.location,
         price: product.price,
         image: product.image || "",
-      })
+      });
     } else {
       // Set default category if available
       if (categories.length > 0) {
         setFormData((prev) => ({
           ...prev,
           category: categories[0].name,
-        }))
+        }));
       }
     }
-  }, [product, categories])
+  }, [product, categories]);
 
   const validateForm = () => {
-    let isValid = true
+    let isValid = true;
     const newErrors = {
       name: "",
       category: "",
       stock: "",
       minStock: "",
       price: "",
-    }
+    };
 
     if (!formData.name.trim()) {
-      newErrors.name = "El nombre es obligatorio"
-      isValid = false
+      newErrors.name = "El nombre es obligatorio";
+      isValid = false;
     }
 
     if (!formData.category) {
-      newErrors.category = "La categoría es obligatoria"
-      isValid = false
+      newErrors.category = "La categoría es obligatoria";
+      isValid = false;
     }
 
     if (formData.stock < 0) {
-      newErrors.stock = "El stock no puede ser negativo"
-      isValid = false
+      newErrors.stock = "El stock no puede ser negativo";
+      isValid = false;
     }
 
     if (formData.minStock < 0) {
-      newErrors.minStock = "El stock mínimo no puede ser negativo"
-      isValid = false
+      newErrors.minStock = "El stock mínimo no puede ser negativo";
+      isValid = false;
     }
 
     if (formData.price <= 0) {
-      newErrors.price = "El precio debe ser mayor a 0"
-      isValid = false
+      newErrors.price = "El precio debe ser mayor a 0";
+      isValid = false;
     }
 
-    setErrors(newErrors)
-    return isValid
-  }
+    setErrors(newErrors);
+    return isValid;
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "stock" || name === "minStock" || name === "price" ? Number.parseFloat(value) || 0 : value,
-    }))
-  }
+      [name]:
+        name === "stock" || name === "minStock" || name === "price"
+          ? Number.parseFloat(value) || 0
+          : value,
+    }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!validateForm()) {
-      return
+      return;
     }
 
     if (product) {
-      updateProduct(product.id, formData)
+      updateProduct(product.id, formData);
     } else {
-      addProduct(formData)
+      addProduct(formData);
     }
 
-    onClose()
-  }
+    onClose();
+  };
 
   const formVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
     exit: { opacity: 0, y: 50, transition: { duration: 0.2 } },
-  }
+  };
 
-  if (!isVisible) return null
+  if (!isVisible) return null;
 
   return (
     <motion.div
@@ -144,7 +151,9 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
         exit="exit"
       >
         <div className="flex justify-between items-center p-4 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-800">{product ? "Editar Producto" : "Nuevo Producto"}</h2>
+          <h2 className="text-xl font-semibold text-primary">
+            {product ? "Editar Producto" : "Nuevo Producto"}
+          </h2>
           <Tooltip content="Cerrar">
             <button
               onClick={onClose}
@@ -159,7 +168,10 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
         <form onSubmit={handleSubmit} className="p-4">
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Nombre <span className="text-red-500">*</span>
               </label>
               <input
@@ -168,16 +180,21 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm ${
                   errors.name ? "border-red-500" : ""
                 }`}
                 required
               />
-              {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Descripción
               </label>
               <textarea
@@ -186,12 +203,15 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
                 value={formData.description}
                 onChange={handleChange}
                 rows={3}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
               />
             </div>
 
             <div>
-              <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="category"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Categoría <span className="text-red-500">*</span>
               </label>
               <select
@@ -199,7 +219,7 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm ${
                   errors.category ? "border-red-500" : ""
                 }`}
                 required
@@ -211,12 +231,17 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
                   </option>
                 ))}
               </select>
-              {errors.category && <p className="mt-1 text-sm text-red-500">{errors.category}</p>}
+              {errors.category && (
+                <p className="mt-1 text-sm text-red-500">{errors.category}</p>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="stock" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="stock"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Stock <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -226,16 +251,21 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
                   value={formData.stock}
                   onChange={handleChange}
                   min="0"
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${
+                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm ${
                     errors.stock ? "border-red-500" : ""
                   }`}
                   required
                 />
-                {errors.stock && <p className="mt-1 text-sm text-red-500">{errors.stock}</p>}
+                {errors.stock && (
+                  <p className="mt-1 text-sm text-red-500">{errors.stock}</p>
+                )}
               </div>
 
               <div>
-                <label htmlFor="minStock" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="minStock"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Stock Mínimo <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -245,18 +275,23 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
                   value={formData.minStock}
                   onChange={handleChange}
                   min="0"
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${
+                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm ${
                     errors.minStock ? "border-red-500" : ""
                   }`}
                   required
                 />
-                {errors.minStock && <p className="mt-1 text-sm text-red-500">{errors.minStock}</p>}
+                {errors.minStock && (
+                  <p className="mt-1 text-sm text-red-500">{errors.minStock}</p>
+                )}
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="location" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="location"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Ubicación
                 </label>
                 <input
@@ -265,12 +300,15 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                 />
               </div>
 
               <div>
-                <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="price"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Precio <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -281,17 +319,22 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
                   onChange={handleChange}
                   min="0"
                   step="0.01"
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${
+                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm ${
                     errors.price ? "border-red-500" : ""
                   }`}
                   required
                 />
-                {errors.price && <p className="mt-1 text-sm text-red-500">{errors.price}</p>}
+                {errors.price && (
+                  <p className="mt-1 text-sm text-red-500">{errors.price}</p>
+                )}
               </div>
             </div>
 
             <div>
-              <label htmlFor="image" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="image"
+                className="block text-sm font-medium text-gray-700"
+              >
                 URL de la imagen
               </label>
               <input
@@ -300,7 +343,7 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
                 name="image"
                 value={formData.image}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
               />
             </div>
           </div>
@@ -309,14 +352,14 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
               <FaTimes className="mr-2 -ml-1 h-4 w-4" />
               Cancelar
             </button>
             <button
               type="submit"
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
             >
               {product ? (
                 <>
@@ -334,7 +377,7 @@ const ProductForm = ({ product, onClose, isVisible }: ProductFormProps) => {
         </form>
       </motion.div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default ProductForm
+export default ProductForm;

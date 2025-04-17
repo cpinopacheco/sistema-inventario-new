@@ -13,19 +13,26 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Nueva paleta de colores institucional
+        primary: {
+          DEFAULT: "#013812", // Verde oscuro
+          light: "#B9D187", // Verde claro
+          foreground: "#ffffff",
+        },
+        secondary: {
+          DEFAULT: "#EABD00", // Dorado
+          foreground: "#ffffff",
+        },
+        accent: {
+          DEFAULT: "#0883CB", // Azul
+          foreground: "#ffffff",
+        },
+        // Mantener las variables originales de shadcn/ui
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -33,10 +40,6 @@ module.exports = {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",

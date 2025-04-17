@@ -1,38 +1,38 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { FaLock, FaWarehouse } from "react-icons/fa"
-import { useAuth } from "../context/AuthContext"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { FaLock } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-  const { login } = useAuth()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
+  const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!email.trim() || !password.trim()) {
-      setError("Por favor, ingrese su email y contraseña")
-      return
+      setError("Por favor, ingrese su email y contraseña");
+      return;
     }
 
     try {
-      setLoading(true)
-      setError("")
-      await login(email, password)
+      setLoading(true);
+      setError("");
+      await login(email, password);
     } catch (error) {
-      setError("Ocurrió un error al iniciar sesión")
-      console.error(error)
+      setError("Ocurrió un error al iniciar sesión");
+      console.error(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -45,14 +45,22 @@ const Login = () => {
         <div className="text-center mb-8">
           <motion.div
             initial={{ scale: 0 }}
-            animate={{ scale: 1, rotate: 360 }}
+            animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 text-white rounded-full mb-4"
+            className="mb-4"
           >
-            <FaWarehouse size={24} />
+            <img
+              src="/img/cenpecar-logo.png"
+              alt="CENPECAR Logo"
+              className="h-24 w-auto mx-auto"
+            />
           </motion.div>
-          <h2 className="text-2xl font-bold text-gray-800">Sistema de Inventario</h2>
-          <p className="text-gray-600 mt-1">Gestión de bodega e inventario</p>
+          <h2 className="text-xl font-bold text-primary">
+            Centro Nacional de Perfeccionamiento y Capacitación
+          </h2>
+          <p className="text-primary-light mt-1">
+            Sistema de Gestión de Inventario
+          </p>
         </div>
 
         {error && (
@@ -68,7 +76,10 @@ const Login = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Email
             </label>
             <input
@@ -76,13 +87,16 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               placeholder="admin@example.com"
               required
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Contraseña
             </label>
             <div className="relative">
@@ -91,7 +105,7 @@ const Login = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 placeholder="••••••••"
                 required
               />
@@ -103,7 +117,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+            className="w-full bg-primary hover:bg-opacity-90 text-white font-semibold py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50"
           >
             {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
           </button>
@@ -120,7 +134,7 @@ const Login = () => {
         </div>
       </motion.div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

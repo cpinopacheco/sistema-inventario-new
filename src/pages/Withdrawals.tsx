@@ -71,13 +71,13 @@ const Withdrawals = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800">Gestión de Retiros</h1>
+        <h1 className="text-2xl font-bold text-primary">Gestión de Retiros</h1>
         <button
           onClick={() => setShowWithdrawalHistory(!showWithdrawalHistory)}
           className={`px-4 py-2 rounded-md ${
             showWithdrawalHistory
-              ? "bg-blue-100 text-blue-800 hover:bg-blue-200"
-              : "bg-blue-600 text-white hover:bg-blue-700"
+              ? "bg-primary-light text-primary hover:bg-opacity-90"
+              : "bg-primary text-white hover:bg-opacity-90"
           } transition-colors`}
         >
           {showWithdrawalHistory
@@ -98,11 +98,11 @@ const Withdrawals = () => {
           >
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-800 flex items-center">
-                  <FaShoppingCart className="mr-2 text-blue-600" />
+                <h2 className="text-xl font-semibold text-primary flex items-center">
+                  <FaShoppingCart className="mr-2 text-primary" />
                   Carrito de Retiro
                 </h2>
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                <span className="px-3 py-1 bg-primary-light text-primary rounded-full text-sm font-medium">
                   {cartTotalItems} {cartTotalItems === 1 ? "ítem" : "ítems"}
                 </span>
               </div>
@@ -176,7 +176,7 @@ const Withdrawals = () => {
                                       Number.parseInt(e.target.value) || 1
                                     )
                                   }
-                                  className="w-12 py-1 text-center border-t border-b border-gray-300"
+                                  className="w-20 py-1 text-center border-t border-b border-gray-300"
                                 />
                                 <button
                                   onClick={() =>
@@ -220,7 +220,7 @@ const Withdrawals = () => {
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
                       rows={3}
-                      className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
                       placeholder="Añade notas adicionales sobre este retiro..."
                     />
                   </div>
@@ -228,7 +228,7 @@ const Withdrawals = () => {
                   <div className="flex justify-end">
                     <button
                       onClick={handleConfirmWithdrawal}
-                      className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                      className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-colors"
                     >
                       <FaCheck className="mr-2" />
                       Confirmar Retiro
@@ -237,8 +237,8 @@ const Withdrawals = () => {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <FaShoppingCart className="mx-auto text-gray-400 text-5xl mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-1">
+                  <FaShoppingCart className="mx-auto text-primary-light text-5xl mb-4" />
+                  <h3 className="text-lg font-medium text-primary mb-1">
                     El carrito está vacío
                   </h3>
                   <p className="text-gray-500 mb-4">
@@ -247,7 +247,7 @@ const Withdrawals = () => {
                   </p>
                   <button
                     onClick={() => navigate("/products")}
-                    className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                    className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition-colors"
                   >
                     Ir a Productos
                   </button>
@@ -266,7 +266,7 @@ const Withdrawals = () => {
           >
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="bg-gray-50 px-6 py-4 border-b">
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className="text-xl font-semibold text-primary">
                   Historial de Retiros
                 </h2>
               </div>
@@ -276,14 +276,14 @@ const Withdrawals = () => {
                   {withdrawals.map((withdrawal) => (
                     <div key={withdrawal.id} className="p-6">
                       <div className="flex justify-between items-center mb-2">
-                        <h3 className="text-lg font-medium text-gray-900">
+                        <h3 className="text-lg font-medium text-primary">
                           Retiro #{withdrawal.id} - {withdrawal.userName}
                         </h3>
                         <div className="flex space-x-2">
                           <Tooltip content="Exportar a Excel">
                             <button
                               onClick={() => handleExportToExcel(withdrawal.id)}
-                              className="text-green-600 hover:text-green-900"
+                              className="text-primary hover:text-primary-light"
                             >
                               <FaFileExcel size={18} />
                             </button>
@@ -296,7 +296,7 @@ const Withdrawals = () => {
                                   : withdrawal.id
                               )
                             }
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-primary hover:text-primary-light"
                           >
                             {selectedWithdrawal === withdrawal.id ? (
                               <FaTimes size={18} />
@@ -375,8 +375,8 @@ const Withdrawals = () => {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <FaClipboardList className="mx-auto text-gray-400 text-5xl mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-1">
+                  <FaClipboardList className="mx-auto text-primary-light text-5xl mb-4" />
+                  <h3 className="text-lg font-medium text-primary mb-1">
                     No hay retiros registrados
                   </h3>
                   <p className="text-gray-500">

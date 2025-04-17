@@ -2,9 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: #013812;
+  --color-primary-light: #b9d187;
+  --color-secondary: #eabd00;
+  --color-accent: #0883cb;
+}
+
 body {
   font-family: "Inter", sans-serif;
   @apply bg-gray-100;
+}
+
+/* Ocultar flechas (spinners) de los inputs numéricos */
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 /* Animaciones personalizadas */
@@ -37,6 +57,21 @@ button {
   @apply transition-all duration-200;
 }
 
+/* Estilos personalizados para botones primarios */
+.btn-primary {
+  @apply bg-primary text-white hover:bg-opacity-90 focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}
+
+/* Estilos personalizados para botones secundarios */
+.btn-secondary {
+  @apply bg-secondary text-primary hover:bg-opacity-90 focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+}
+
+/* Estilos personalizados para botones de acento */
+.btn-accent {
+  @apply bg-accent text-white hover:bg-opacity-90 focus:ring-2 focus:ring-accent focus:ring-offset-2;
+}
+
 /* Scrollbar personalizada */
 ::-webkit-scrollbar {
   width: 8px;
@@ -48,9 +83,9 @@ button {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded-full;
+  @apply bg-primary-light rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
+  @apply bg-primary bg-opacity-50;
 }
